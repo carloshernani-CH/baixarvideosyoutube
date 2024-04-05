@@ -1,12 +1,16 @@
 import streamlit as st
 from pytube import YouTube
+from pathlib import Path
+
 
 def baixar_video(url):
     youtube = YouTube(url)
     
     video_stream = youtube.streams.get_highest_resolution()
     
-    video_stream.download()
+    downloads_path = str(Path.home() / "Downloads")
+    
+    video_stream.download(output_path=downloads_path)
     
     return "Download concluído!"
 
@@ -21,4 +25,3 @@ if st.button('Baixar Vídeo'):
             st.success(mensagem)
     else:
         st.error('Por favor, insira um link válido.')
-
